@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `date_create` datetime DEFAULT NULL,
   `date_update` datetime DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
+  `employee_name` varchar(255) DEFAULT NULL,
   `number_document_employee` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `profile` varchar(255) DEFAULT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `employer` (
   `id` bigint(20) NOT NULL,
   `date_create` datetime DEFAULT NULL,
   `date_update` datetime DEFAULT NULL,
-  `employer` varchar(255) DEFAULT NULL,
+  `employer_name` varchar(255) DEFAULT NULL,
   `number_document_employer` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 

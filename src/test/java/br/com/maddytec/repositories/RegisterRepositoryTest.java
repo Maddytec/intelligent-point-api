@@ -85,7 +85,7 @@ public class RegisterRepositoryTest {
 
 	private Employee getDataEmployee(Employer employer) throws NoSuchAlgorithmException {
 		Employee employee = new Employee(); 
-		employee.setName("Madson Silva");
+		employee.setEmployeeName("Madson Silva");
 		employee.setProfileEnum(ProfileEnum.ROLE_USER);
 		employee.setPassword(PasswordUtils.generateBCrypt("1234"));
 		employee.setNumberDocumentEmployee(NUMBER_DOCUMENT_EMPLOYEE);
@@ -96,7 +96,7 @@ public class RegisterRepositoryTest {
 
 	private Employer getDataEmployer() {
 		Employer employer = new Employer();
-		employer.setEmployer("Maddytec Tecnologia ao seu alcance");
+		employer.setEmployerName("Maddytec Tecnologia ao seu alcance");
 		employer.setNumberDocumentEmployer("112233445566");
 		return employer;
 	}

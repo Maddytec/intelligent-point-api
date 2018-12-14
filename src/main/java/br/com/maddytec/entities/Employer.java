@@ -42,7 +42,8 @@ public class Employer implements Serializable {
 	private Long id;
 
 	@NonNull
-	private String employer;
+	@Column(name = "employer_name")
+	private String employerName;
 
 	@NonNull
 	@Column(name = "number_document_employer")

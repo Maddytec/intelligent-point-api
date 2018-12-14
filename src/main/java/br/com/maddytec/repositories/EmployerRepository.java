@@ -11,6 +11,6 @@ public interface EmployerRepository extends JpaRepository<Employer, Long> {
 	Employer findByNumberDocumentEmployer(String numberDocumentEmployer) ;
 	
 	@Transactional(readOnly = true)
-	Employer findByEmployer(String employer) ;
+	Employer findByEmployerName(String employerName) ;
 	
 }

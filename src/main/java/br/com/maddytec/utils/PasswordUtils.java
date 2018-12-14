@@ -2,7 +2,7 @@ package br.com.maddytec.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import lombok.NoArgsConstructor;
 
@@ -17,7 +17,7 @@ public class PasswordUtils {
 		}
 		
 		log.info("Generate hash wich BCrypt.");
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		return bCryptPasswordEncoder.encode(password);
+		//BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		return null ; //bCryptPasswordEncoder.encode(password);
 	}
 }

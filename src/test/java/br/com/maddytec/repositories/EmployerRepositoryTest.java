@@ -27,7 +27,7 @@ public class EmployerRepositoryTest {
 	@Before
 	public void setUp() throws Exception {
 		Employer employer = new Employer();
-		employer.setEmployer(EMPLOYER);
+		employer.setEmployerName(EMPLOYER);
 		employer.setNumberDocumentEmployer(NUMBER_DOCUMENT_EMPLOYER);
 		this.employerRepository.save(employer);
 	}
@@ -46,8 +46,8 @@ public class EmployerRepositoryTest {
 	
 	@Test
 	public void testFindByEmployer() {
-		Employer employer = this.employerRepository.findByEmployer(EMPLOYER);
+		Employer employer = this.employerRepository.findByEmployerName(EMPLOYER);
 		
-		assertEquals(EMPLOYER, employer.getEmployer());
+		assertEquals(EMPLOYER, employer.getEmployerName());
 	}
 }

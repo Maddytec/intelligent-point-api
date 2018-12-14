@@ -32,83 +32,89 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @RequiredArgsConstructor
 @ToString
 @EqualsAndHashCode
 @Table(name = "employee")
-public class Employee implements Serializable{
-	
+public class Employee implements Serializable {
+
 	private static final long serialVersionUID = 6755691086224180372L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	@NonNull
-	private String name;
-	
+	private String EmployeeName;
+
 	@NonNull
 	private String email;
-	
+
 	@NonNull
 	private String password;
-	
+
 	@NonNull
 	@Column(name = "number_document_employee")
 	private String numberDocumentEmployee;
-	
+
 	@NonNull
 	@Column(name = "value_hour")
 	private BigDecimal valueHour;
-	
+
 	@NonNull
 	@Column(name = "count_hours_work_day")
 	private Float countHoursWorkDay;
-	
+
 	@Column(name = "count_hours_lunch")
 	private Float countHoursLunch;
-	
+
 	@NonNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "profile")
 	private ProfileEnum profileEnum;
-	
+
 	@NonNull
 	@Column(name = "date_create")
 	private Date dateCreate;
-	
+
 	@NonNull
 	@Column(name = "date_update")
 	private Date dateUpdate;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Employer employer;
-	
+
 	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Register> registers;
-	
+
 	@Transient
-	public Optional<BigDecimal> getValueHour(){
+	public Optional<BigDecimal> getValueHourOpt() {
 		return Optional.ofNullable(valueHour);
 	}
-	
+
 	@Transient
-	public Optional<Float> getCountHoursWorkDayOpt(){
+	public Optional<Float> getCountHoursLunchOpt() {
+		return Optional.ofNullable(countHoursLunch);
+	}
+
+	@Transient
+	public Optional<Float> getCountHoursWorkDayOpt() {
 		return Optional.ofNullable(countHoursWorkDay);
 	}
-	
+
 	@PreUpdate
 	public void preUpdate() {
 		dateUpdate = new Date();
 	}
-	
+
 	@PrePersist
 	public void prePersist() {
 		final Date atual = new Date();
 		dateCreate = atual;
 		dateUpdate = atual;
 	}
-	
+
 }
