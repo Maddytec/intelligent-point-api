@@ -11,4 +11,12 @@ public class EmployerConverter {
 		employer.setNumberDocumentEmployer(employerDto.getNumberDocumentEmployer());
 		return employer;
 	}
+	
+	public static EmployerDto employerForEmployerDto(Employer employer) {
+		EmployerDto employerDto = new EmployerDto();
+		employerDto.setId(employer.getId());
+		employerDto.setEmployerName(employer.getEmployerName());
+		employerDto.setNumberDocumentEmployer(employer.getNumberDocumentEmployer());
+		return employerDto;
+	}
 }

@@ -1,6 +1,7 @@
 package br.com.maddytec.controllers;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -76,6 +79,24 @@ public class EmployerController {
 		this.employeeService.findByNumberDocumentEmployee(employerDto.getNumberDocumentEmployee())
 				.ifPresent(employee -> result
 						.addError(new ObjectError("Employee", "Document number of the employee already exist.")));
+	}
+
+	@GetMapping(value = "/{numberDocumentEmployer}")
+	public ResponseEntity<Response<EmployerDto>> findByNumberDocumentEmployer(
+			@PathVariable("numberDocumentEmployer") String numberDocumentEmployer) {
+		log.info("Find employer by number Document: {}", numberDocumentEmployer);
+
+		Response<EmployerDto> response = new Response<EmployerDto>();
+		Optional<Employer> employer = this.employerService.findByNumberDocumentEmployer(numberDocumentEmployer);
+
+		if (!employer.isPresent()) {
+			log.info("Employer  was are not encountered by number document: {}", numberDocumentEmployer);
+			response.getErrors().add("Employer was are not encountered by number document: " + numberDocumentEmployer);
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		response.setData(EmployerConverter.employerForEmployerDto(employer.get()));
+		return ResponseEntity.ok(response);
 	}
 
 }
