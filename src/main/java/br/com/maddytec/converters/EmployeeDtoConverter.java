@@ -21,7 +21,7 @@ public class EmployeeDtoConverter {
 		employee.getCountHoursWorkDayOpt().ifPresent(countHoursWorkDayOpt -> employeeDto
 				.setCountHoursWorkDay(Optional.of(Float.toString(countHoursWorkDayOpt))));
 		employee.getValueHourOpt().ifPresent(valueHourOpt -> employeeDto.setValueHour(Optional.of(valueHourOpt.toString())));
-
+		
 		return employeeDto;
 	}
 

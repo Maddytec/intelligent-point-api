@@ -16,11 +16,16 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CPF;
 
 import br.com.maddytec.enums.ProfileEnum;
 import lombok.EqualsAndHashCode;
@@ -38,7 +43,6 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @ToString
 @EqualsAndHashCode
-@Table(name = "employee")
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = 6755691086224180372L;
@@ -48,23 +52,28 @@ public class Employee implements Serializable {
 	private Long id;
 
 	@NonNull
+	@NotEmpty(message = "Name can't is empty.")
 	private String EmployeeName;
 
 	@NonNull
+	@Email(message = "Email invalid")
+	@NotEmpty(message = "Email can't is empty.")
+	@Length(min = 5, max = 200, message = "Email must is between 5 and 200 characters.")
 	private String email;
 
 	@NonNull
+	@NotEmpty(message = "Password can't is empty.")
 	private String password;
 
 	@NonNull
 	@Column(name = "number_document_employee")
+	@NotEmpty(message = "Document number of the employee can't is empty.")
+	@CPF(message = "Document number of employee invalid.")
 	private String numberDocumentEmployee;
 
-	@NonNull
 	@Column(name = "value_hour")
 	private BigDecimal valueHour;
 
-	@NonNull
 	@Column(name = "count_hours_work_day")
 	private Float countHoursWorkDay;
 
@@ -85,6 +94,7 @@ public class Employee implements Serializable {
 	private Date dateUpdate;
 
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn
 	private Employer employer;
 
 	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

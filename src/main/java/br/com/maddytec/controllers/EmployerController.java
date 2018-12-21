@@ -46,18 +46,18 @@ public class EmployerController {
 
 	@PostMapping
 	public ResponseEntity<Response<EmployerDto>> register(@Valid @RequestBody EmployerDto employerDto,
-			BindingResult result) throws NoSuchAlgorithmException {
+			BindingResult bindingResult) throws NoSuchAlgorithmException {
 		log.info("Registering employer: {}", employerDto);
 
 		Response<EmployerDto> response = new Response<EmployerDto>();
 
-		validationDataEmployer(employerDto, result);
+		validationDataEmployer(employerDto, bindingResult);
 		Employer employer = EmployerConverter.employerDtoForEmployer(employerDto);
 		Employee employee = EmployeeConverter.employerDtoForEmployee(employerDto);
 
-		if (result.hasErrors()) {
-			log.error("Error in the validation of data registering employer: {}", result.getAllErrors());
-			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+		if (bindingResult.hasErrors()) {
+			log.error("Error in the validation of data registering employer: {}", bindingResult.getAllErrors());
+			bindingResult.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
 

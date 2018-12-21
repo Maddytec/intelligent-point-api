@@ -58,6 +58,7 @@ public class Employer implements Serializable {
 	private Date dateCreate;
 
 	@OneToMany(mappedBy = "employer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	private List<Employee> employees;
 
 	@PreUpdate

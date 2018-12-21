@@ -1,5 +1,6 @@
 package br.com.maddytec.controllers;
 
+import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
@@ -12,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,16 +46,16 @@ public class EmployeeController {
 
 	@PostMapping
 	public ResponseEntity<Response<EmployeeDto>> register(@Valid @RequestBody EmployeeDto employeeDto,
-			BindingResult result) throws NoSuchAlgorithmException {
+			BindingResult bindingResult) throws NoSuchAlgorithmException {
 		log.info("EmployeeDto: {}", employeeDto);
 		Response<EmployeeDto> response = new Response<EmployeeDto>();
 
-		validationDataEmployee(employeeDto, result);
+		validationDataEmployee(employeeDto, bindingResult);
 		Employee employee = EmployeeConverter.employeeDtoForEmployee(employeeDto);
 
-		if (result.hasErrors()) {
-			log.error("Error in the validation of data registering employee: {}", result.getAllErrors());
-			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+		if (bindingResult.hasErrors()) {
+			log.error("Error in the validation of data registering employee: {}", bindingResult.getAllErrors());
+			bindingResult.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
 
@@ -63,6 +66,63 @@ public class EmployeeController {
 
 		response.setData(EmployeeDtoConverter.employeeForEmployeeDto(employee));
 		return ResponseEntity.ok(response);
+	}
+
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Response<EmployeeDto>> update(@PathVariable("id") Long id,
+			@Valid @RequestBody EmployeeDto employeeDto, BindingResult bindingResult) throws NoSuchAlgorithmException {
+		log.info("Updating employee: {}", employeeDto);
+		Response<EmployeeDto> response = new Response<>();
+
+		Optional<Employee> employee = this.employeeService.findById(id);
+
+		if (!employee.isPresent()) {
+			bindingResult.addError(new ObjectError("Employee", "Employee is not encountered"));
+		}
+
+		updateDataEmployee(employee.get(), employeeDto, bindingResult);
+
+		if (bindingResult.hasErrors()) {
+			log.error("Error in the validation of data registering employee: {}", bindingResult.getAllErrors());
+			bindingResult.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		employee = Optional.ofNullable(this.employeeService.save(employee.get()));
+		response.setData(EmployeeDtoConverter.employeeForEmployeeDto(employee.get()));
+
+		return ResponseEntity.ok(response);
+	}
+
+	private void updateDataEmployee(Employee employee, EmployeeDto employeeDto, BindingResult bindingResult) {
+		employee.setEmployeeName(employeeDto.getEmployeeName());
+
+		if (employeeDto.getEmail() != null && !employee.getEmail().equals(employeeDto.getEmail())) {
+			this.employeeService.findByEmail(employeeDto.getEmail())
+					.ifPresent(email -> bindingResult.addError(new ObjectError("Email", "Email already exist.")));
+			employee.setEmail(employeeDto.getEmail());
+		}
+
+		if (employeeDto.getEmail() == null) {
+			employeeDto.setEmail(employee.getEmail());
+		}
+
+		employee.setCountHoursLunch(null);
+		employeeDto.getCountHoursLunch()
+				.ifPresent(countHoursLunch -> employee.setCountHoursLunch(Float.valueOf(countHoursLunch)));
+
+		employee.setCountHoursWorkDay(null);
+		employeeDto.getCountHoursWorkDay()
+				.ifPresent(countHoursWorkDay -> employee.setCountHoursWorkDay(Float.valueOf(countHoursWorkDay)));
+
+		employee.setValueHour(null);
+		employeeDto.getValueHour().ifPresent(valueHour -> employee.setValueHour(new BigDecimal(valueHour)));
+
+		if (employeeDto.getPassword() != null) {
+			employee.setPassword(employeeDto.getPassword());
+		} else {
+			employeeDto.setPassword(employee.getPassword());
+		}
 	}
 
 	/**

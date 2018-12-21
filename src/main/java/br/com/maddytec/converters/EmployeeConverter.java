@@ -16,7 +16,6 @@ public class EmployeeConverter {
 		employee.setEmail(employerDto.getEmail());
 		employee.setNumberDocumentEmployee(employerDto.getNumberDocumentEmployee());
 		employee.setProfileEnum(ProfileEnum.ROLE_ADMIN);
-		employee.setPassword(employerDto.getPassword());
 		return employee;
 	}
 
@@ -24,9 +23,9 @@ public class EmployeeConverter {
 		Employee employee = new Employee();
 		employee.setEmployeeName(employeeDto.getEmployeeName());
 		employee.setEmail(employeeDto.getEmail());
+		employee.setPassword(employeeDto.getPassword());
 		employee.setNumberDocumentEmployee(employeeDto.getNumberDocumentEmployee());
 		employee.setProfileEnum(ProfileEnum.ROLE_USER);
-		employee.setPassword(employeeDto.getPassword());
 		employeeDto.getCountHoursLunch()
 				.ifPresent(countHoursLunch -> employee.setCountHoursLunch(Float.valueOf(countHoursLunch)));
 		employeeDto.getCountHoursWorkDay()
