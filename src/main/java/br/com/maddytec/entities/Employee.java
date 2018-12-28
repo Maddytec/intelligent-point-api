@@ -98,6 +98,7 @@ public class Employee implements Serializable {
 	private Employer employer;
 
 	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ToString.Exclude
 	private List<Register> registers;
 
 	@Transient
