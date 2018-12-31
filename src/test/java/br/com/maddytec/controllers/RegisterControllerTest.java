@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -53,6 +54,7 @@ public class RegisterControllerTest {
 	private static final Date DATE = new Date();
 
 	@Test
+	@WithMockUser
 	public void testSaveRigister() throws Exception {
 		Register register = getDataRegister();
 
@@ -70,6 +72,7 @@ public class RegisterControllerTest {
 	}
 
 	@Test
+	@WithMockUser
 	public void testSaveRigisterEmployeeIdInvalid() throws Exception {
 		BDDMockito.given(this.employeeService.findById(Mockito.anyLong())).willReturn(Optional.empty());
 
@@ -84,6 +87,7 @@ public class RegisterControllerTest {
 	}
 	
 	@Test
+	@WithMockUser(username = "maddytec@maddytec.com.br", roles = {"ADMIN"})
 	public void testDeleteRegister() throws Exception {
 		BDDMockito.given(this.registerService.findById(Mockito.anyLong())).willReturn(Optional.of(new Register()));
 		
@@ -92,6 +96,17 @@ public class RegisterControllerTest {
 				.andExpect(status().isOk());
 	}
 
+	
+	@Test
+	@WithMockUser
+	public void testDeleteRegisterAccessDenied() throws Exception {
+		BDDMockito.given(this.registerService.findById(Mockito.anyLong())).willReturn(Optional.of(new Register()));
+		
+		mockMvc.perform(MockMvcRequestBuilders.delete(URL_BASE + "/" + ID_REGISTER)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isForbidden());
+	}
+	
 	private Register getDataRegister() {
 		Register register = new Register();
 		register.setDate(DATE);

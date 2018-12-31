@@ -29,7 +29,7 @@ public class EmployeeRepositoryTest {
 	private EmployerRepository employerRepository;
 	
 	private static final String EMAIL = "maddytec@gmail.com";
-	private static final String NUMBER_DOCUMENT_EMPLOYEE = "12345678910";
+	private static final String NUMBER_DOCUMENT_EMPLOYEE = "98738187078";
 	
 	@Before
 	public void setUp() throws Exception {

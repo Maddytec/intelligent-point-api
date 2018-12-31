@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 10.129.76.12
--- Tempo de geração: 03/12/2018 às 15:18
+-- Generation Time: 30-Dez-2018 às 23:33
 -- Versão do servidor: 5.6.26-log
--- Versão do PHP: 5.6.12
+-- PHP Version: 5.6.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Banco de dados: `intelligent_db`
+-- Database: `intelligent_db`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `employee`
+-- Estrutura da tabela `employee`
 --
 
 CREATE TABLE IF NOT EXISTS `employee` (
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `employee` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `employer`
+-- Estrutura da tabela `employer`
 --
 
 CREATE TABLE IF NOT EXISTS `employer` (
@@ -56,9 +56,8 @@ CREATE TABLE IF NOT EXISTS `employer` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
-
 --
--- Estrutura para tabela `hibernate_sequence`
+-- Estrutura da tabela `hibernate_sequence`
 --
 
 CREATE TABLE IF NOT EXISTS `hibernate_sequence` (
@@ -66,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `hibernate_sequence` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Fazendo dump de dados para tabela `hibernate_sequence`
+-- Extraindo dados da tabela `hibernate_sequence`
 --
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
@@ -77,7 +76,7 @@ INSERT INTO `hibernate_sequence` (`next_val`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `register`
+-- Estrutura da tabela `register`
 --
 
 CREATE TABLE IF NOT EXISTS `register` (
@@ -91,27 +90,46 @@ CREATE TABLE IF NOT EXISTS `register` (
   `employee_id` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- Índices de tabelas apagadas
+-- Estrutura da tabela `user`
+--
+
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` bigint(20) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `profile` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
 --
 
 --
--- Índices de tabela `employee`
+-- Indexes for table `employee`
 --
 ALTER TABLE `employee`
  ADD PRIMARY KEY (`id`), ADD KEY `FKrmknjkdeoo3molal1gxkt9dar` (`employer_id`);
 
 --
--- Índices de tabela `employer`
+-- Indexes for table `employer`
 --
 ALTER TABLE `employer`
  ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `register`
+-- Indexes for table `register`
 --
 ALTER TABLE `register`
  ADD PRIMARY KEY (`id`), ADD KEY `FK27yj934o5cr7royh64xm6pihr` (`employee_id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+ ADD PRIMARY KEY (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -4,9 +4,11 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Component;
 
 import br.com.maddytec.entities.Register;
 
+@Component
 public interface RegisterService {
 
 	/**

@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.expression.ParseException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -43,10 +44,10 @@ public class RegisterController {
 
 	private static final Logger log = LoggerFactory.getLogger(RegisterController.class);
 
-	@Autowired
+	@Autowired(required = true)
 	private RegisterService registerService;
 
-	@Autowired
+	@Autowired(required = true)
 	private EmployeeService employeeService;
 
 	@Value("${pagination.count_by_page}")
@@ -141,6 +142,7 @@ public class RegisterController {
 	}
 
 	@DeleteMapping(value = "/{id}")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Response<String>> delete(@PathVariable("id") Long id) {
 		log.info("Deleting register: {}", id);
 

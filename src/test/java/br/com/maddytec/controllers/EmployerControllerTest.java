@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,7 +28,7 @@ import br.com.maddytec.services.EmployerService;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class EmployerControllerTest implements Cloneable {
+public class EmployerControllerTest {
 
 	@Autowired
 	private MockMvc mvc;
@@ -40,6 +41,7 @@ public class EmployerControllerTest implements Cloneable {
 	private static final String EMPLOYER_NAME = "Maddytec Tecnologia ao seu alcance";
 
 	@Test
+	@WithMockUser
 	public void testFindByEmployerByNumeberDocumentInvalid() throws Exception {
 		BDDMockito.given(this.employerService.findByNumberDocumentEmployer(Mockito.anyString()))
 				.willReturn(Optional.empty());
@@ -51,6 +53,7 @@ public class EmployerControllerTest implements Cloneable {
 	}
 
 	@Test
+	@WithMockUser
 	public void testFindByEmployerByNumeberDocumentValid() throws Exception {
 		BDDMockito.given(this.employerService.findByNumberDocumentEmployer(Mockito.anyString()))
 				.willReturn(Optional.of(this.getDataEmployer()));

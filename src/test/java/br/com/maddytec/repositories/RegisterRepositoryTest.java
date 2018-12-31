@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -41,7 +42,7 @@ public class RegisterRepositoryTest {
 	private Long employeeId;
 
 	private static final String EMAIL = "maddytec@gmail.com";
-	private static final String NUMBER_DOCUMENT_EMPLOYEE = "12345678910";
+	private static final String NUMBER_DOCUMENT_EMPLOYEE = "26452222007";
 
 	@Before
 	public void setUp() throws Exception {
@@ -61,6 +62,7 @@ public class RegisterRepositoryTest {
 	}
 
 	@Test
+	@WithMockUser
 	public void testGetRegistersByEmployeeId() {
 		List<Register> registers = this.registerRepository.findByEmployeeId(employeeId);
 
@@ -68,6 +70,7 @@ public class RegisterRepositoryTest {
 	}
 
 	@Test
+	@WithMockUser
 	public void testGetRegistersByEmployeeIdPageable() {
 		PageRequest page = PageRequest.of(0, 10);
 		Page<Register> registers = this.registerRepository.findByEmployeeId(employeeId, page);
@@ -97,7 +100,7 @@ public class RegisterRepositoryTest {
 	private Employer getDataEmployer() {
 		Employer employer = new Employer();
 		employer.setEmployerName("Maddytec Tecnologia ao seu alcance");
-		employer.setNumberDocumentEmployer("112233445566");
+		employer.setNumberDocumentEmployer("14403256000154");
 		return employer;
 	}
 
