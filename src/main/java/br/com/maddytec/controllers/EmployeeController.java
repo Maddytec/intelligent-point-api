@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,6 +29,8 @@ import br.com.maddytec.entities.Employer;
 import br.com.maddytec.response.Response;
 import br.com.maddytec.services.EmployeeService;
 import br.com.maddytec.services.EmployerService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import lombok.NoArgsConstructor;
 
 @RestController
@@ -45,6 +48,8 @@ public class EmployeeController {
 	private EmployeeService employeeService;
 
 	@PostMapping
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@ApiOperation(value = "", authorizations = { @Authorization(value="Authorization") })
 	public ResponseEntity<Response<EmployeeDto>> register(@Valid @RequestBody EmployeeDto employeeDto,
 			BindingResult bindingResult) throws NoSuchAlgorithmException {
 		log.info("EmployeeDto: {}", employeeDto);
@@ -69,6 +74,8 @@ public class EmployeeController {
 	}
 
 	@PutMapping(value = "/{id}")
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@ApiOperation(value = "", authorizations = { @Authorization(value="Authorization") })
 	public ResponseEntity<Response<EmployeeDto>> update(@PathVariable("id") Long id,
 			@Valid @RequestBody EmployeeDto employeeDto, BindingResult bindingResult) throws NoSuchAlgorithmException {
 		log.info("Updating employee: {}", employeeDto);

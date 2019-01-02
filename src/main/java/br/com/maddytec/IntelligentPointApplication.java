@@ -25,12 +25,12 @@ public class IntelligentPointApplication {
 	}
 	
 	private void initUsers(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-		User admin = new User();
-	/*	admin.setEmail("maddytec@gmail.com");
+	/*	User admin = new User();
+		admin.setEmail("madson.silva@maddytec.com.br");
 		admin.setPassword(passwordEncoder.encode("12345678"));
 		admin.setProfileEnum(ProfileEnum.ROLE_ADMIN);
 		
-		User find = userRepository.findByEmail("maddytec@gmail.com");
+		User find = userRepository.findByEmail("madson.silva@maddytec.com.br");
 		if(find == null) {
 			userRepository.save(admin);
 		}

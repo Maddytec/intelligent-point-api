@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,6 +29,8 @@ import br.com.maddytec.entities.Employer;
 import br.com.maddytec.response.Response;
 import br.com.maddytec.services.EmployeeService;
 import br.com.maddytec.services.EmployerService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import lombok.NoArgsConstructor;
 
 @RestController
@@ -45,6 +48,8 @@ public class EmployerController {
 	private EmployerService employerService;
 
 	@PostMapping
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@ApiOperation(value = "", authorizations = { @Authorization(value="Authorization") })
 	public ResponseEntity<Response<EmployerDto>> register(@Valid @RequestBody EmployerDto employerDto,
 			BindingResult bindingResult) throws NoSuchAlgorithmException {
 		log.info("Registering employer: {}", employerDto);
@@ -82,6 +87,8 @@ public class EmployerController {
 	}
 
 	@GetMapping(value = "/{numberDocumentEmployer}")
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@ApiOperation(value = "", authorizations = { @Authorization(value="Authorization") })
 	public ResponseEntity<Response<EmployerDto>> findByNumberDocumentEmployer(
 			@PathVariable("numberDocumentEmployer") String numberDocumentEmployer) {
 		log.info("Find employer by number Document: {}", numberDocumentEmployer);

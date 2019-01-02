@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public Optional<User> buscarPorEmail(String email) {
+	public Optional<User> findByEmail(String email) {
 		return Optional.ofNullable(this.userRepository.findByEmail(email));
 	}
 }

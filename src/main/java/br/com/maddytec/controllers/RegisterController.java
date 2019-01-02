@@ -34,6 +34,8 @@ import br.com.maddytec.entities.Register;
 import br.com.maddytec.response.Response;
 import br.com.maddytec.services.EmployeeService;
 import br.com.maddytec.services.RegisterService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import lombok.NoArgsConstructor;
 
 @RestController
@@ -54,6 +56,8 @@ public class RegisterController {
 	private int countByPage;
 
 	@GetMapping(value = "/employee/{employeeId}")
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@ApiOperation(value = "", authorizations = { @Authorization(value="Authorization") })
 	public ResponseEntity<Response<Page<RegisterDto>>> registersfindByEmployeeId(
 			@PathVariable("employeeId") Long employeeId, @RequestParam(value = "pag", defaultValue = "0") int pag,
 			@RequestParam(value = "ord", defaultValue = "id") String ord,
@@ -71,6 +75,8 @@ public class RegisterController {
 	}
 
 	@GetMapping(value = "/{id}")
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@ApiOperation(value = "", authorizations = { @Authorization(value="Authorization") })
 	public ResponseEntity<Response<RegisterDto>> registerById(@PathVariable("id") Long id) {
 		log.info("Searching register by Id: {}", id);
 
@@ -89,6 +95,8 @@ public class RegisterController {
 	}
 
 	@PostMapping
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@ApiOperation(value = "", authorizations = { @Authorization(value="Authorization") })
 	public ResponseEntity<Response<RegisterDto>> save(@Valid @RequestBody RegisterDto registerDto,
 			BindingResult bindingResult) throws ParseException {
 		log.info("Adding register of the employee: {}", registerDto.toString());
@@ -111,6 +119,8 @@ public class RegisterController {
 	}
 
 	@PutMapping(value = "/{id}")
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@ApiOperation(value = "", authorizations = { @Authorization(value="Authorization") })
 	public ResponseEntity<Response<RegisterDto>> update(@PathVariable("id") Long id,
 			@Valid @RequestBody RegisterDto registerDto, BindingResult bindingResult) throws ParseException {
 		log.info("Updating register: {}", registerDto.toString());
@@ -143,6 +153,7 @@ public class RegisterController {
 
 	@DeleteMapping(value = "/{id}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
+	@ApiOperation(value = "", authorizations = { @Authorization(value="Authorization") })
 	public ResponseEntity<Response<String>> delete(@PathVariable("id") Long id) {
 		log.info("Deleting register: {}", id);
 

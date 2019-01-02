@@ -12,6 +12,6 @@ public interface UserService {
 	 * @param email
 	 * @return Optional<Usuario>
 	 */
-	Optional<User> buscarPorEmail(String email);
+	Optional<User> findByEmail(String email);
 
 }
