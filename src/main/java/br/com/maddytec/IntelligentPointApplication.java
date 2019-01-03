@@ -3,14 +3,14 @@ package br.com.maddytec;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import br.com.maddytec.enums.ProfileEnum;
-import br.com.maddytec.security.entities.User;
 import br.com.maddytec.security.repositories.UserRepository;
 
 @SpringBootApplication
+@EnableCaching
 public class IntelligentPointApplication {
 
 	public static void main(String[] args) {
