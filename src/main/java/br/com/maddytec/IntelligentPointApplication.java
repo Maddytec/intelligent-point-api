@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import br.com.maddytec.enums.ProfileEnum;
@@ -12,6 +13,7 @@ import br.com.maddytec.security.entities.User;
 import br.com.maddytec.security.repositories.UserRepository;
 
 @SpringBootApplication
+@Profile("dev")
 @EnableCaching
 public class IntelligentPointApplication {
 
