@@ -13,7 +13,6 @@ import br.com.maddytec.security.entities.User;
 import br.com.maddytec.security.repositories.UserRepository;
 
 @SpringBootApplication
-@Profile("dev")
 @EnableCaching
 public class IntelligentPointApplication {
 
