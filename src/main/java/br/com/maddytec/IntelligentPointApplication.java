@@ -27,7 +27,7 @@ public class IntelligentPointApplication {
 	}
 	
 	private void initUsers(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-		User admin = new User();
+	/*	User admin = new User();
 		admin.setEmail("madson.silva@maddytec.com.br");
 		admin.setPassword(passwordEncoder.encode("12345678"));
 		admin.setProfileEnum(ProfileEnum.ROLE_ADMIN);
@@ -36,6 +36,7 @@ public class IntelligentPointApplication {
 		if(find == null) {
 			userRepository.save(admin);
 		}
-		
+	*/	
 	}
+	
 }
